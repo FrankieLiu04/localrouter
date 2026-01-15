@@ -4,8 +4,24 @@
   "description": "Local OpenAI-compatible router for multiple LLM providers (DeepSeek first)",
   "type": "module",
   "main": "dist/main/index.js",
-  "author": "",
+  "author": "Frankie Liu",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FrankieLiu04/localrouter.git"
+  },
+  "homepage": "https://github.com/FrankieLiu04/localrouter",
+  "bugs": {
+    "url": "https://github.com/FrankieLiu04/localrouter/issues"
+  },
+  "keywords": [
+    "electron",
+    "openai",
+    "llm",
+    "proxy",
+    "deepseek",
+    "local"
+  ],
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",
