@@ -1,5 +1,6 @@
 import http from 'node:http'
 import { Readable } from 'node:stream'
+import type { ReadableStream as WebReadableStream } from 'node:stream/web'
 
 const DEEPSEEK_BASE_URL = 'https://api.deepseek.com'
 
@@ -107,7 +108,7 @@ async function proxyChatCompletions(req: http.IncomingMessage, res: http.ServerR
       return
     }
 
-    const stream = Readable.fromWeb(response.body)
+    const stream = Readable.fromWeb(response.body as unknown as WebReadableStream)
     stream.on('data', (chunk) => res.write(chunk))
     stream.on('end', () => res.end())
     stream.on('error', () => res.end())
