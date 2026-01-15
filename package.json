@@ -1,0 +1,44 @@
+{
+  "name": "localrouter",
+  "version": "0.1.0",
+  "description": "Local OpenAI-compatible router for multiple LLM providers (DeepSeek first)",
+  "type": "module",
+  "main": "dist/main/index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "electron": "^31.2.1",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "typescript": "^5.7.3"
+  },
+  "build": {
+    "appId": "com.localrouter.app",
+    "productName": "LocalRouter",
+    "files": [
+      "dist/**/*"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}
