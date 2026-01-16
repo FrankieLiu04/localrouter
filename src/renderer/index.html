@@ -1,12 +1,122 @@
 <!doctype html>
-<html lang="zh-CN">
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LocalRouter</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+    />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div id="app">
+      <div class="window-content">
+        <header class="app-header">
+          <div class="title-group">
+            <h1>LocalRouter</h1>
+            <div id="server-status" class="status-badge running">
+              <span class="dot"></span>
+              <span class="status-text">Running</span>
+            </div>
+          </div>
+          <p class="subtitle">Your local bridge to AI services.</p>
+        </header>
+
+        <main class="settings-list">
+          <section class="settings-group">
+            <h2 class="group-title">Connection</h2>
+            
+            <div class="setting-item">
+              <div class="setting-label">
+                <label>API Endpoint</label>
+                <span class="setting-desc">Use this URL in your AI apps</span>
+              </div>
+              <div class="setting-control input-group">
+                <input type="text" id="base-url" readonly value="http://127.0.0.1:8787/v1" />
+                <button type="button" id="copy-base" class="icon-btn" title="Copy URL">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-label">
+                <label>Access Token</label>
+                <span class="setting-desc">Protect your local server</span>
+              </div>
+              <div class="setting-control input-group">
+                <input type="text" id="local-key-input" placeholder="Optional" />
+                <button type="button" id="gen-key" class="icon-btn" title="Generate New Token">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                </button>
+                <button type="button" id="copy-key" class="icon-btn" title="Copy Token">
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-group">
+            <h2 class="group-title">Service Provider</h2>
+            
+            <div class="setting-item">
+              <div class="setting-label">
+                <label for="provider-select">Service</label>
+              </div>
+              <div class="setting-control">
+                <select id="provider-select" class="select-input">
+                  <option value="deepseek">DeepSeek</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-label">
+                <label for="key-input">API Key</label>
+                <span class="setting-desc" id="key-desc">Enter your provider's key</span>
+              </div>
+              <div class="setting-control">
+                <input type="password" id="key-input" placeholder="sk-..." />
+                <div class="helper-text" id="key-status"></div>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+               <div class="setting-label"></div>
+               <div class="setting-control">
+                  <button type="button" id="balance-check" class="text-btn">Check Balance</button>
+               </div>
+            </div>
+          </section>
+
+          <section class="settings-group">
+             <h2 class="group-title">System</h2>
+             <div class="setting-item">
+                <div class="setting-label">
+                  <label for="port-input">Port</label>
+                </div>
+                <div class="setting-control">
+                   <input type="number" id="port-input" value="8787" class="short-input" />
+                </div>
+             </div>
+             
+             <div class="setting-item">
+                <div class="setting-label">
+                   <label>Diagnostics</label>
+                </div>
+                <div class="setting-control">
+                   <button type="button" id="health-check" class="text-btn">Run Health Check</button>
+                </div>
+             </div>
+          </section>
+        </main>
+
+        <footer class="app-footer">
+          <div id="save-status" class="toast"></div>
+          <button type="button" id="save-btn" class="primary-btn">Apply Changes</button>
+        </footer>
+      </div>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
   </body>
 </html>

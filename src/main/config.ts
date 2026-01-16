@@ -1,13 +1,9 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { App } from 'electron'
+import type { LocalRouterConfig } from '../shared/types.js'
 
-export type LocalRouterConfig = {
-  port: number
-  apiKey: string
-  localApiKey: string
-  provider: 'deepseek'
-}
+export type { LocalRouterConfig } from '../shared/types.js'
 
 export const DEFAULT_CONFIG: LocalRouterConfig = {
   port: 8787,

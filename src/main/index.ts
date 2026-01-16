@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, shell, nativeTheme } from 'electron'
 import { join } from 'node:path'
 import type { Server } from 'node:http'
 import { startServer } from './server'
@@ -9,11 +9,17 @@ let server: Server | null = null
 let config: LocalRouterConfig = { ...DEFAULT_CONFIG }
 let tray: Tray | null = null
 
+function getBackgroundColor() {
+  return nativeTheme.shouldUseDarkColors ? '#1e1e1e' : '#ffffff'
+}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 960,
-    height: 640,
-    show: true,
+    width: 900,
+    height: 600,
+    show: false,
+    backgroundColor: getBackgroundColor(),
+    ...(process.platform === 'darwin' ? { titleBarStyle: 'hiddenInset' as const } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js')
     }
@@ -31,6 +37,10 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow?.show()
+  })
 }
 
 function getTrayIcon() {
@@ -96,6 +106,12 @@ app.whenReady().then(async () => {
   server = await startServer(config)
   updateTrayMenu()
   createWindow()
+
+  nativeTheme.on('updated', () => {
+    if (mainWindow) {
+      mainWindow.setBackgroundColor(getBackgroundColor())
+    }
+  })
 
   ipcMain.handle('config:get', () => config)
   ipcMain.handle('config:set', async (_event, next: Partial<LocalRouterConfig>) => {
